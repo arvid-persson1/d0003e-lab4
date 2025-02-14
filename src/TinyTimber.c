@@ -127,24 +127,24 @@ static void schedule(void);
 
 #define IRQ(n,v) ISR(v) { TIMERGET(timestamp); if (mtable[n]) mtable[n](otable[n],n); schedule(); }
 
-IRQ(IRQ_INT0,            INT0_vect);
-IRQ(IRQ_PCINT0,          PCINT0_vect);
-IRQ(IRQ_PCINT1,          PCINT1_vect);
-IRQ(IRQ_TIMER2_COMP,     TIMER2_COMP_vect);
-IRQ(IRQ_TIMER2_OVF,      TIMER2_OVF_vect);
-IRQ(IRQ_TIMER0_COMP,     TIMER0_COMP_vect);
-IRQ(IRQ_TIMER0_OVF,      TIMER0_OVF_vect);
-IRQ(IRQ_SPI_STC,         SPI_STC_vect);
-IRQ(IRQ_USART0_RX,       USART0_RX_vect);
-IRQ(IRQ_USART0_UDRE,     USART0_UDRE_vect);
-IRQ(IRQ_USART0_TX,       USART0_TX_vect);
-IRQ(IRQ_USI_START,       USI_START_vect);
-IRQ(IRQ_USI_OVERFLOW,    USI_OVERFLOW_vect);
-IRQ(IRQ_ANALOG_COMP,     ANALOG_COMP_vect);
-IRQ(IRQ_ADC,             ADC_vect);
-IRQ(IRQ_EE_READY,        EE_READY_vect);
-IRQ(IRQ_SPM_READY,       SPM_READY_vect);
-IRQ(IRQ_LCD,             LCD_vect);
+IRQ(IRQ_INT0,            INT0_vect)
+IRQ(IRQ_PCINT0,          PCINT0_vect)
+IRQ(IRQ_PCINT1,          PCINT1_vect)
+IRQ(IRQ_TIMER2_COMP,     TIMER2_COMP_vect)
+IRQ(IRQ_TIMER2_OVF,      TIMER2_OVF_vect)
+IRQ(IRQ_TIMER0_COMP,     TIMER0_COMP_vect)
+IRQ(IRQ_TIMER0_OVF,      TIMER0_OVF_vect)
+IRQ(IRQ_SPI_STC,         SPI_STC_vect)
+IRQ(IRQ_USART0_RX,       USART0_RX_vect)
+IRQ(IRQ_USART0_UDRE,     USART0_UDRE_vect)
+IRQ(IRQ_USART0_TX,       USART0_TX_vect)
+IRQ(IRQ_USI_START,       USI_START_vect)
+IRQ(IRQ_USI_OVERFLOW,    USI_OVERFLOW_vect)
+IRQ(IRQ_ANALOG_COMP,     ANALOG_COMP_vect)
+IRQ(IRQ_ADC,             ADC_vect)
+IRQ(IRQ_EE_READY,        EE_READY_vect)
+IRQ(IRQ_SPM_READY,       SPM_READY_vect)
+IRQ(IRQ_LCD,             LCD_vect)
 
 /* queue manager */
 void enqueueByDeadline(Msg p, Msg *queue) {

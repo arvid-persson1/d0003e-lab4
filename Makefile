@@ -1,5 +1,5 @@
 COMPILER := avr-gcc
-FLAGS := -W -Wall -Wextra -Werror -pedantic -std=c23 -mmcu=atmega169
+FLAGS := -W -Wall -Wextra -Werror -pedantic -std=c23 -mmcu=atmega169 -Wno-unused-but-set-variable
 DEBUG_FLAGS := -g -O0
 RELEASE_FLAGS := -O3
 
