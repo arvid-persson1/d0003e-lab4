@@ -5,13 +5,13 @@
 #define PRESS (1 << 4)
 
 int switchGen(Handler *const self, __attribute__((unused)) int _x) {
-    self->current ^= 1;
+    // TODO: 
     return 0;
 }
 
 // TODO: handle hold
 int changeFreq(const Handler *const self, const int pinb) {
-    PulseGenerator *current = self->current ? self->p1 : self->p2;
+    PulseGenerator *current = self->p;
 
     // TODO: do these calls need to be async?
     // Error cases should be impossible, the loops

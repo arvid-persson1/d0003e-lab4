@@ -6,11 +6,10 @@
 
 typedef struct {
     Object super;
-    PulseGenerator *p1, *p2;
-    unsigned int current : 1;
+    PulseGenerator *p;
 } Handler;
 
-#define initHandler(p1, p2) { initObject(), p1, p1, 0 }
+#define initHandler(p) { initObject(), p }
 
 int switchGen(Handler *const, int);
 int changeFreq(const Handler *const, int);
