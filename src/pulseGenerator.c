@@ -3,7 +3,7 @@
 #define HALF_PERIOD (MSEC(500) / self->frequency)
 #define PRINT() SYNC(self->display, print, PACK_PRINT(self->frequency, self->position))
 
-int output(PulseGenerator *self, __attribute__((unused)) int _x) {
+int output(PulseGenerator *const self, __attribute__((unused)) const int _x) {
     if (self->frequency) {
         SYNC(self->writer, write, self->state);
         self->state ^= 1;
@@ -17,7 +17,7 @@ int output(PulseGenerator *self, __attribute__((unused)) int _x) {
     return 0;
 }
 
-int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
+int stash(PulseGenerator *const self, __attribute__((unused)) const int _x) {
     if (self->frequency) {
         self->stashed = self->frequency;
         self->frequency = 0;
@@ -32,7 +32,7 @@ int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
 
 #define MAX_FREQUENCY 99
 
-int increment(PulseGenerator *self, __attribute__((unused)) int _x) {
+int increment(PulseGenerator *const self, __attribute__((unused)) const int _x) {
     if (self->frequency < MAX_FREQUENCY)
         self->frequency++;
 
@@ -44,7 +44,7 @@ int increment(PulseGenerator *self, __attribute__((unused)) int _x) {
     return 0;
 }
 
-int decrement(PulseGenerator *self, __attribute__((unused)) int _x) {
+int decrement(PulseGenerator *const self, __attribute__((unused)) const int _x) {
     if (self->frequency > 0)
         self->frequency--;
 

@@ -15,11 +15,11 @@ typedef struct {
     unsigned int position  : 3;
 } PulseGenerator;
 
-#define initGen(disp, pos, pb) { initObject(), disp, initWriter(pb), 0, 0, 0, pos }
+#define initGen(disp, writ, pos) { initObject(), disp, writ, 0, 0, 0, pos }
 
-int output(PulseGenerator *self, __attribute__((unused)) int _x);
-int stash(PulseGenerator *self, __attribute__((unused)) int _x);
-int increment(PulseGenerator *self, __attribute__((unused)) int _x);
-int decrement(PulseGenerator *self, __attribute__((unused)) int _x);
+int output(PulseGenerator *const, __attribute__((unused)) const int);
+int stash(PulseGenerator *const, __attribute__((unused)) const int);
+int increment(PulseGenerator *const, __attribute__((unused)) const int);
+int decrement(PulseGenerator *const, __attribute__((unused)) const int);
 
 #endif

@@ -10,7 +10,7 @@
 
 #define HOLD_SPEED MSEC(200)
 
-int switchGen(InputManager *self, int pine) {
+int switchGen(InputManager *const self, const int pine) {
     if (LEFT(pine) || RIGHT(pine)) {
         self->current ^= 1;
     }
@@ -18,7 +18,7 @@ int switchGen(InputManager *self, int pine) {
     return 0;
 }
 
-int holdInc(InputManager *self, int arg) {
+int holdInc(InputManager *const self, const int arg) {
     // SAFETY: `sizeof(int) >= sizeof(T*)`.
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
@@ -29,7 +29,7 @@ int holdInc(InputManager *self, int arg) {
     return 0;
 }
 
-int holdDec(InputManager *self, int arg) {
+int holdDec(InputManager *const self, const int arg) {
     // SAFETY: `sizeof(int) >= sizeof(T*)`.
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
@@ -40,7 +40,7 @@ int holdDec(InputManager *self, int arg) {
     return 0;
 }
 
-int changeOrStash(InputManager *self, int pinb) {
+int changeOrStash(InputManager *const self, const int pinb) {
     if (self->holdHandle != NULL) {
         ABORT(self->holdHandle);
         self->holdHandle = NULL;

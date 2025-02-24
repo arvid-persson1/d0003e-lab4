@@ -13,7 +13,7 @@ typedef struct {
 
 #define initManager(p1, p2) { initObject(), p1, p2, NULL, 0 }
 
-int switchGen(InputManager *self, int pine);
-int changeOrStash(InputManager *self, int pinb);
+int switchGen(InputManager *const, const int);
+int changeOrStash(InputManager *const, const int);
 
 #endif

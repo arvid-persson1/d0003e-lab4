@@ -10,7 +10,7 @@ typedef struct {
 
 #define initHandler(m) { initObject(), m }
 
-int horizontal(InterruptHandler *self, __attribute__((unused)) int _x);
-int vertical(InterruptHandler *self, __attribute__((unused)) int _x);
+int horizontal(const InterruptHandler *const, __attribute__((unused)) const int);
+int vertical(const InterruptHandler *const, __attribute__((unused)) const int);
 
 #endif

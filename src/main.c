@@ -14,8 +14,10 @@ int main(void) {
     print(&d, PACK_PRINT(0, 0));
     print(&d, PACK_PRINT(0, 4));
 
-    PulseGenerator p1 = initGen(&d, 0, 4);
-    PulseGenerator p2 = initGen(&d, 4, 6);
+    Writer w1 = initWriter(4);
+    PulseGenerator p1 = initGen(&d, &w1, 0);
+    Writer w2 = initWriter(6);
+    PulseGenerator p2 = initGen(&d, &w2, 4);
     InputManager i = initManager(&p1, &p2);
     InterruptHandler h = initHandler(&i);
 

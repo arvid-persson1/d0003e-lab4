@@ -40,6 +40,9 @@
 #ifndef _TINYTIMBER_
 #define _TINYTIMBER_
 
+// Include `NULL` from stdlib instead of redeclaring.
+#include <stdlib.h>
+
 //      Abstract type, used in the definition of Object.
 struct thread_block;
 
@@ -70,12 +73,6 @@ typedef struct msg_block *Msg;
 //      Base type for methods. Every method in a TinyTimber system should take 
 //      a first argument that is a reference to a subclass of class Object.
 typedef int (*Method)(Object*, int);
-
-// XXX: NULL also defined in stdlib.
-#ifndef NULL
-//      Unit pointer value.
-#define NULL 0
-#endif
 
 //  Msg ASYNC(T *obj, int (*meth)(T*, A), A arg);
 //      Asynchronously invoke method meth on object obj with argument arg. 
