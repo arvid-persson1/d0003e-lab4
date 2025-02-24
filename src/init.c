@@ -1,8 +1,6 @@
 #include <avr/io.h>
 #include "init.h"
 
-#define SET(x) (1 << x)
-
 void init(void) {
     // Clock
     CLKPR  = SET(CLKPCE);
