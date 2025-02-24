@@ -50,7 +50,7 @@ int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
         AFTER(MSEC(500) / self->frequency, self, output, 0);
     }
 
-    PRINT()
+    PRINT();
     return 0;
 }
 
@@ -65,7 +65,7 @@ int increment(PulseGenerator *self, __attribute__((unused)) int _x) {
     if (self->frequency < MAX_FREQUENCY)
         self->frequency++;
 
-    PRINT()
+    PRINT();
     return 0;
 }
 
@@ -73,7 +73,7 @@ int decrement(PulseGenerator *self, __attribute__((unused)) int _x) {
     if (self->frequency > 0)
         self->frequency--;
 
-    PRINT()
+    PRINT();
     return 0;
 }
 
