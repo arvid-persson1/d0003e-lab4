@@ -2,11 +2,11 @@
 #include "init.h"
 
 void init(void) {
-    // Clock
+    // Clock.
     CLKPR  = SET(CLKPCE);
     CLKPR  = 0;
 
-    // LCD
+    // LCD.
     LCDCRA = SET(LCDEN)   | SET(LCDAB);
     LCDCRB = SET(LCDCS)
            | SET(LCDMUX1) | SET(LCDMUX0)
@@ -14,7 +14,7 @@ void init(void) {
     LCDFRR = SET(LCDCD2)  | SET(LCDCD1)  | SET(LCDCD0);
     LCDCCR = SET(LCDCC3)  | SET(LCDCC2)  | SET(LCDCC1)  | SET(LCDCC0);
 
-    // Joystick
+    // Joystick.
     PORTB  = SET(PB7)     | SET(PB6)     | SET(PB4);
     PORTE  = SET(PE3)     | SET(PE2);
     EIMSK  = SET(PCIE1)   | SET(PCIE0);

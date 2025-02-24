@@ -3,14 +3,18 @@
 
 #include "TinyTimber.h"
 
+// To "lock" the LCD, `Display` has to be a singleton.
+// As such, instance parameters cannot be used.
+// `position`, used only as argument to `print`,
+// is instead stored in `PulseGenerator`.
 typedef struct {
     Object super;
 } Display;
 
 #define initDisp() { initObject() }
 
-// Pack num and pos into an int.
-// Sound as long as sizeof(Packed) == sizeof(int).
+// Pack `num` and `pos` into an `int`.
+// Sound as long as `sizeof(Packed) == sizeof(int)`.
 
 struct Packed {
     unsigned int num  : 7;
@@ -19,12 +23,12 @@ struct Packed {
     unsigned int _pad : 6;
 };
 
-union Pun {
+union PrintPun {
     struct Packed args;
     int map;
 };
 
-#define PACK(num, pos) ((union Pun){ .args = { num, pos } }).map
+#define PACK_PRINT(num, pos) ((union PrintPun){ .args = { num, pos } }).map
 
 int print(Display *self, int map);
 

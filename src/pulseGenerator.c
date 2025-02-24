@@ -1,27 +1,16 @@
-#include <avr/io.h>
 #include "pulseGenerator.h"
-#include "init.h"
 
 #define HALF_PERIOD (MSEC(500) / self->frequency)
-#define PRINT() SYNC(self->display, print, PACK(self->frequency, self->position))
-
-void write(PulseGenerator *self, int state) {
-    if (state)
-        PORTE |= SET(self->portBit);
-    else
-        PORTE &= ~SET(self->portBit);
-}
+#define PRINT() SYNC(self->display, print, PACK_PRINT(self->frequency, self->position))
 
 int output(PulseGenerator *self, __attribute__((unused)) int _x) {
     if (self->frequency) {
-        // TODO: make TT call
-        write(self, self->state);
+        SYNC(self->writer, write, self->state);
         self->state ^= 1;
 
         AFTER(HALF_PERIOD, self, output, 0);
     } else {
-        // TODO: make TT call
-        write(self, 0);
+        SYNC(self->writer, write, 0);
         self->state = 1;
     }
 

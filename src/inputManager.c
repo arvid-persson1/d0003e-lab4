@@ -19,7 +19,7 @@ int switchGen(InputManager *self, int pine) {
 }
 
 int holdInc(InputManager *self, int arg) {
-    // SAFETY: sizeof(int) >= sizeof(T*).
+    // SAFETY: `sizeof(int) >= sizeof(T*)`.
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
     SYNC(p, increment, 0);
@@ -30,7 +30,7 @@ int holdInc(InputManager *self, int arg) {
 }
 
 int holdDec(InputManager *self, int arg) {
-    // SAFETY: sizeof(int) >= sizeof(T*).
+    // SAFETY: `sizeof(int) >= sizeof(T*)`.
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
     SYNC(p, decrement, 0);

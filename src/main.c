@@ -11,8 +11,8 @@ int main(void) {
 
     Display d = initDisp();
     // XXX: TT is not started yet, no synchronization required.
-    print(&d, PACK(0, 0));
-    print(&d, PACK(0, 4));
+    print(&d, PACK_PRINT(0, 0));
+    print(&d, PACK_PRINT(0, 4));
 
     PulseGenerator p1 = initGen(&d, 0, 4);
     PulseGenerator p2 = initGen(&d, 4, 6);
