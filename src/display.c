@@ -1,6 +1,7 @@
 #include <stdlib.h>
+#include <stdint.h>
 #include <avr/io.h>
-#include "gui.h"
+#include "display.h"
 
 static const uint16_t sccTable[] = {
     0x1551, // 0
@@ -54,7 +55,11 @@ void writeDigit(const uint_fast8_t digit, const uint_fast8_t pos) {
     }
 }
 
-void printAt(const uint_fast8_t num, const uint_fast8_t pos) {
-    writeDigit(num % 100 / 10, pos);
-    writeDigit(num % 10, pos + 1);
+int print(__attribute__((unused)) Display *self, int map) {
+    union Pun p = { .map = map };
+
+    writeDigit(p.args.num % 100 / 10, p.args.pos);
+    writeDigit(p.args.num % 10, p.args.pos + 1);
+
+    return 0;
 }

@@ -1,14 +1,15 @@
 #include "inputManager.h"
 #include "init.h"
 
-#define LEFT SET(2)
-#define RIGHT SET(3)
-#define UP SET(6)
-#define DOWN SET(7)
-#define PRESS SET(4)
+#define CHECK(x, y) !(x & SET(y))
+#define LEFT(x)  CHECK(x, 2)
+#define RIGHT(x) CHECK(x, 3)
+#define PRESS(x) CHECK(x, 4)
+#define UP(x)    CHECK(x, 6)
+#define DOWN(x)  CHECK(x, 7)
 
 int switchGen(InputManager *self, int pine) {
-    if (!(pine & LEFT) || !(pine & RIGHT)) {
+    if (LEFT(pine) || RIGHT(pine)) {
         self->current ^= 1;
     }
 
@@ -45,11 +46,11 @@ int changeOrStash(InputManager *self, int pinb) {
 
     PulseGenerator *p = self->current ? self->p2 : self->p1;
 
-    if (!(pinb & PRESS)) {
+    if (PRESS(pinb)) {
         ASYNC(p, stash, 0);
-    } else if (!(pinb & UP)) {
+    } else if (UP(pinb)) {
         holdInc(self, (int)p);
-    } else if (!(pinb & DOWN)) {
+    } else if (DOWN(pinb)) {
         holdDec(self, (int)p);
     }
 

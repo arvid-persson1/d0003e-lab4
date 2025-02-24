@@ -1,7 +1,9 @@
 #include <avr/io.h>
 #include "pulseGenerator.h"
 #include "init.h"
-#include "gui.h"
+
+#define HALF_PERIOD (MSEC(500) / self->frequency)
+#define PRINT() SYNC(self->display, print, PACK(self->frequency, self->position))
 
 void write(PulseGenerator *self, int state) {
     if (state)
@@ -16,7 +18,7 @@ int output(PulseGenerator *self, __attribute__((unused)) int _x) {
         write(self, self->state);
         self->state ^= 1;
 
-        AFTER(MSEC(500) / self->frequency, self, output, 0);
+        AFTER(HALF_PERIOD, self, output, 0);
     } else {
         // TODO: make TT call
         write(self, 0);
@@ -26,15 +28,13 @@ int output(PulseGenerator *self, __attribute__((unused)) int _x) {
     return 0;
 }
 
-#define PRINT() printAt(self->frequency, self->position)
-
 int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
     if (self->frequency) {
         self->stashed = self->frequency;
         self->frequency = 0;
     } else {
         self->frequency = self->stashed;
-        AFTER(MSEC(500) / self->frequency, self, output, 0);
+        AFTER(HALF_PERIOD, self, output, 0);
     }
 
     PRINT();
@@ -44,11 +44,12 @@ int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
 #define MAX_FREQUENCY 99
 
 int increment(PulseGenerator *self, __attribute__((unused)) int _x) {
-    if (self->frequency == 0)
-        AFTER(MSEC(500), self, output, 0);
-
     if (self->frequency < MAX_FREQUENCY)
         self->frequency++;
+
+    // Output chain needs to be restarted after 0.
+    if (self->frequency == 1)
+        AFTER(HALF_PERIOD, self, output, 0);
 
     PRINT();
     return 0;

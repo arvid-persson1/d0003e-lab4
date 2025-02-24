@@ -71,8 +71,11 @@ typedef struct msg_block *Msg;
 //      a first argument that is a reference to a subclass of class Object.
 typedef int (*Method)(Object*, int);
 
+// XXX: NULL also defined in stdlib.
+#ifndef NULL
 //      Unit pointer value.
 #define NULL 0
+#endif
 
 //  Msg ASYNC(T *obj, int (*meth)(T*, A), A arg);
 //      Asynchronously invoke method meth on object obj with argument arg. 
