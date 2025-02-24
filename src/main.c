@@ -56,8 +56,6 @@ int stash(PulseGenerator *self, __attribute__((unused)) int _x) {
 
 #define MAX_FREQUENCY 99
 
-// Assume that this function completes within 500 ms.
-// If it doesn't, schedule the 2nd branch to run `BEFORE(MSEC(500), ...)`
 int increment(PulseGenerator *self, __attribute__((unused)) int _x) {
     if (self->frequency == 0)
         AFTER(MSEC(500), self, output, 0);
@@ -80,10 +78,11 @@ int decrement(PulseGenerator *self, __attribute__((unused)) int _x) {
 typedef struct {
     Object super;
     PulseGenerator *p1, *p2;
+    Msg holdHandle;
     unsigned int current : 1;
 } InputManager;
 
-#define initManager(p1, p2) { initObject(), p1, p2, 0 }
+#define initManager(p1, p2) { initObject(), p1, p2, NULL, 0 }
 
 #define LEFT SET(2)
 #define RIGHT SET(3)
@@ -99,15 +98,42 @@ int switchGen(InputManager *self, int pine) {
     return 0;
 }
 
+int holdInc(InputManager *self, int arg) {
+    // SAFETY: sizeof(int) >= sizeof(T*).
+    // Source and target type are identical.
+    PulseGenerator *p = (PulseGenerator*)arg;
+    BEFORE(SEC(1), p, increment, 0);
+
+    self->holdHandle = AFTER(SEC(1), self, holdInc, arg);
+
+    return 0;
+}
+
+int holdDec(InputManager *self, int arg) {
+    // SAFETY: sizeof(int) >= sizeof(T*).
+    // Source and target type are identical.
+    PulseGenerator *p = (PulseGenerator*)arg;
+    BEFORE(SEC(1), p, decrement, 0);
+
+    self->holdHandle = AFTER(SEC(1), self, holdDec, arg);
+
+    return 0;
+}
+
 int changeOrStash(InputManager *self, int pinb) {
+    if (self->holdHandle != NULL) {
+        ABORT(self->holdHandle);
+        self->holdHandle = NULL;
+    }
+
     PulseGenerator *p = self->current ? self->p2 : self->p1;
 
     if (!(pinb & PRESS)) {
         ASYNC(p, stash, 0);
     } else if (!(pinb & UP)) {
-        ASYNC(p, increment, 0);
+        holdInc(self, (int)p);
     } else if (!(pinb & DOWN)) {
-        ASYNC(p, decrement, 0);
+        holdDec(self, (int)p);
     }
 
     return 0;
