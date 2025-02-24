@@ -8,6 +8,8 @@
 #define UP(x)    CHECK(x, 6)
 #define DOWN(x)  CHECK(x, 7)
 
+#define HOLD_SPEED MSEC(200)
+
 int switchGen(InputManager *self, int pine) {
     if (LEFT(pine) || RIGHT(pine)) {
         self->current ^= 1;
@@ -20,9 +22,9 @@ int holdInc(InputManager *self, int arg) {
     // SAFETY: sizeof(int) >= sizeof(T*).
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
-    BEFORE(SEC(1), p, increment, 0);
+    BEFORE(HOLD_SPEED, p, increment, 0);
 
-    self->holdHandle = AFTER(SEC(1), self, holdInc, arg);
+    self->holdHandle = AFTER(HOLD_SPEED, self, holdInc, arg);
 
     return 0;
 }
@@ -31,9 +33,9 @@ int holdDec(InputManager *self, int arg) {
     // SAFETY: sizeof(int) >= sizeof(T*).
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
-    BEFORE(SEC(1), p, decrement, 0);
+    BEFORE(HOLD_SPEED, p, decrement, 0);
 
-    self->holdHandle = AFTER(SEC(1), self, holdDec, arg);
+    self->holdHandle = AFTER(HOLD_SPEED, self, holdDec, arg);
 
     return 0;
 }
