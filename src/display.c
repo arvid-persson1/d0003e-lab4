@@ -55,7 +55,7 @@ void writeDigit(const uint_fast8_t digit, const uint_fast8_t pos) {
     }
 }
 
-int print(__attribute__((unused)) Display *self, int map) {
+int print(__attribute__((unused)) const Display *const self, const int map) {
     union PrintPun p = { .map = map };
 
     writeDigit(p.args.num % 100 / 10, p.args.pos);

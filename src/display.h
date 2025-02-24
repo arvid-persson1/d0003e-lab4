@@ -30,6 +30,6 @@ union PrintPun {
 
 #define PACK_PRINT(num, pos) ((union PrintPun){ .args = { num, pos } }).map
 
-int print(Display *self, int map);
+int print(const Display *const, const int map);
 
 #endif
