@@ -22,7 +22,7 @@ int holdInc(InputManager *self, int arg) {
     // SAFETY: sizeof(int) >= sizeof(T*).
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
-    BEFORE(HOLD_SPEED, p, increment, 0);
+    SYNC(p, increment, 0);
 
     self->holdHandle = AFTER(HOLD_SPEED, self, holdInc, arg);
 
@@ -33,7 +33,7 @@ int holdDec(InputManager *self, int arg) {
     // SAFETY: sizeof(int) >= sizeof(T*).
     // Source and target type are identical.
     PulseGenerator *p = (PulseGenerator*)arg;
-    BEFORE(HOLD_SPEED, p, decrement, 0);
+    SYNC(p, decrement, 0);
 
     self->holdHandle = AFTER(HOLD_SPEED, self, holdDec, arg);
 
@@ -49,7 +49,7 @@ int changeOrStash(InputManager *self, int pinb) {
     PulseGenerator *p = self->current ? self->p2 : self->p1;
 
     if (PRESS(pinb)) {
-        ASYNC(p, stash, 0);
+        SYNC(p, stash, 0);
     } else if (UP(pinb)) {
         holdInc(self, (int)p);
     } else if (DOWN(pinb)) {
