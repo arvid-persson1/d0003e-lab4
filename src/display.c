@@ -56,10 +56,10 @@ void writeDigit(const uint_fast8_t digit, const uint_fast8_t pos) {
 }
 
 int print(__attribute__((unused)) const Display *const self, const int map) {
-    union PrintPun p = { .map = map };
+    struct Packed p = ((union PrintPun){ .map = map }).args;
 
-    writeDigit(p.args.num % 100 / 10, p.args.pos);
-    writeDigit(p.args.num % 10, p.args.pos + 1);
+    writeDigit(p.num % 100 / 10, p.pos);
+    writeDigit(p.num % 10, p.pos + 1);
 
     return 0;
 }
