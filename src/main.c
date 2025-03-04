@@ -15,14 +15,16 @@ int main(void) {
     print(&d, PACK_PRINT(0, 4));
 
     Writer w1 = initWriter(4);
-    PulseGenerator p1 = initGen(&d, &w1, 0);
+    PulseGenerator p1 = initGen(&d, &w1, 0, 1);
     Writer w2 = initWriter(6);
-    PulseGenerator p2 = initGen(&d, &w2, 4);
+    PulseGenerator p2 = initGen(&d, &w2, 4, 0);
     InputManager i = initManager(&p1, &p2);
     InterruptHandler h = initHandler(&i);
 
     INSTALL(&h, horizontal, IRQ_PCINT0);
     INSTALL(&h, vertical, IRQ_PCINT1);
 
-    return TINYTIMBER(&p1, output, 0);
+    ASYNC(&p1, output, 0);
+    ASYNC(&p2, output, 0);
+    return TINYTIMBER(NULL, NULL, NULL);
 }

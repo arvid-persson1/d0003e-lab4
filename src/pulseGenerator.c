@@ -1,18 +1,28 @@
 #include "pulseGenerator.h"
 
+#define ZERO_PERIOD MSEC(500)
 #define HALF_PERIOD (MSEC(500) / self->frequency)
+
 #define PRINT() SYNC(self->display, print, PACK_PRINT(self->frequency, self->position))
 
 int output(PulseGenerator *const self, __attribute__((unused)) const int _x) {
-    if (self->frequency) {
-        SYNC(self->writer, write, self->state);
-        self->state ^= 1;
+    Time period;
+    int out;
 
-        AFTER(HALF_PERIOD, self, output, 0);
+    if (self->frequency) {
+        out = self->state;
+        self->state ^= 1;
+        period = HALF_PERIOD;
     } else {
-        SYNC(self->writer, write, 0);
+        out = 0;
         self->state = 1;
+        period = ZERO_PERIOD;
     }
+
+    if (self->active)
+        SYNC(self->writer, write, out);
+
+    AFTER(period, self, output, 0);
 
     return 0;
 }
@@ -23,7 +33,6 @@ int stash(PulseGenerator *const self, __attribute__((unused)) const int _x) {
         self->frequency = 0;
     } else {
         self->frequency = self->stashed;
-        AFTER(HALF_PERIOD, self, output, 0);
     }
 
     PRINT();
@@ -35,10 +44,6 @@ int stash(PulseGenerator *const self, __attribute__((unused)) const int _x) {
 int increment(PulseGenerator *const self, __attribute__((unused)) const int _x) {
     if (self->frequency < MAX_FREQUENCY)
         self->frequency++;
-
-    // Output chain needs to be restarted after 0.
-    if (self->frequency == 1)
-        AFTER(HALF_PERIOD, self, output, 0);
 
     PRINT();
     return 0;

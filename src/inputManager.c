@@ -12,7 +12,8 @@
 
 int switchGen(InputManager *const self, const int pine) {
     if (LEFT(pine) || RIGHT(pine)) {
-        self->current ^= 1;
+        self->p1->active ^= 1;
+        self->p2->active ^= 1;
     }
 
     return 0;
@@ -41,6 +42,7 @@ int holdDec(InputManager *const self, const int arg) {
 }
 
 int changeOrStash(InputManager *const self, const int pinb) {
+    // TODO: does `ABORT` already handle `NULL`?
     if (self->holdHandle != NULL) {
         ABORT(self->holdHandle);
         self->holdHandle = NULL;

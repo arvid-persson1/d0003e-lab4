@@ -12,10 +12,11 @@ typedef struct {
     unsigned int frequency : 7;
     unsigned int state     : 1;
     unsigned int stashed   : 7;
+    unsigned int active    : 1;
     unsigned int position  : 3;
 } PulseGenerator;
 
-#define initGen(disp, writ, pos) { initObject(), disp, writ, 0, 0, 0, pos }
+#define initGen(disp, writ, pos, act) { initObject(), disp, writ, 0, 0, 0, act, pos }
 
 int output(PulseGenerator *const, __attribute__((unused)) const int);
 int stash(PulseGenerator *const, __attribute__((unused)) const int);
