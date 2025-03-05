@@ -15,5 +15,6 @@ typedef struct {
 
 int switchGen(InputManager *const, const int);
 int changeOrStash(InputManager *const, const int);
+int start(const InputManager *const, __attribute__((unused)) const int);
 
 #endif

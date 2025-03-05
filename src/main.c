@@ -24,7 +24,5 @@ int main(void) {
     INSTALL(&h, horizontal, IRQ_PCINT0);
     INSTALL(&h, vertical, IRQ_PCINT1);
 
-    ASYNC(&p1, output, 0);
-    ASYNC(&p2, output, 0);
-    return TINYTIMBER(NULL, NULL, NULL);
+    return TINYTIMBER(&i, start, 0);
 }

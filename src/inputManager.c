@@ -60,3 +60,10 @@ int changeOrStash(InputManager *const self, const int pinb) {
 
     return 0;
 }
+
+int start(const InputManager *const self, __attribute__((unused)) const int _x) {
+    ASYNC(self->p1, output, 0);
+    ASYNC(self->p2, output, 0);
+
+    return 0;
+}
