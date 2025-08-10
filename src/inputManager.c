@@ -48,7 +48,7 @@ int changeOrStash(InputManager *const self, const int pinb) {
         self->holdHandle = NULL;
     }
 
-    PulseGenerator *p = self->current ? self->p2 : self->p1;
+    PulseGenerator *p = self->p1->active ? self->p1 : self->p2;
 
     if (PRESS(pinb)) {
         SYNC(p, stash, 0);

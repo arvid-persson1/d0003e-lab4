@@ -8,10 +8,9 @@ typedef struct {
     Object super;
     PulseGenerator *p1, *p2;
     Msg holdHandle;
-    unsigned int current : 1;
 } InputManager;
 
-#define initManager(p1, p2) { initObject(), p1, p2, NULL, 0 }
+#define initManager(p1, p2) { initObject(), p1, p2, NULL }
 
 int switchGen(InputManager *const, const int);
 int changeOrStash(InputManager *const, const int);
